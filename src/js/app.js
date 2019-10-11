@@ -86,6 +86,8 @@ App = {
     displayWill.addEventListener("click", (e) => {
       App.handleWillDisplay(e);
     })
+
+    App.handleEntry();
   },
 
   markAdopted: function(adopters, account) {
@@ -106,6 +108,27 @@ App = {
       }
     }).catch(function(err) {
       console.log(err.message);
+    });
+  },
+
+  handleEntry: function() {
+
+    web3.eth.getAccounts(async function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+      console.log("Account:",account);
+      const adoptionInstance = await App.contracts.Adoption.deployed();
+      console.log(adoptionInstance);
+
+      const isUserReg = await adoptionInstance.isRegistered(account);
+      
+      let regBut = document.getElementById("user-reg");
+      if(isUserReg){
+        regBut.innerText = `Welcome`;
+      }
     });
   },
 
