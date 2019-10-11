@@ -5,13 +5,13 @@ contract UserRegistration {
 
     // mapping (address => string) addressWillMapping;
 
-    function setUser(address _user) external{
+    function setUser(address _user) public{
         uint id = users.push(_user);
         id++;
     }
 
-    function getUsers() external returns(address[] memory) {
-		return users;
+    function getUsers() public view returns(address[] memory) {
+		  return users;
     }
 
 
