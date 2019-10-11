@@ -103,36 +103,28 @@ App = {
   handleAdopt: function(event) {
     event.preventDefault();
     console.log("Adopt");
-    // var petId = parseInt($(event.target).data('id'));
 
-    /*
-     * Replace me...
-     */
     var adoptionInstance;
 
-    web3.eth.getAccounts(function(error, accounts) {
+    web3.eth.getAccounts(async function(error, accounts) {
       if (error) {
         console.log(error);
       }
 
       var account = accounts[0];
-      console.log(account);
-      App.contracts.Adoption.deployed().then(function(instance) {
-        adoptionInstance = instance;
-        window.adoptionlol = adoptionInstance;
-        // Execute adopt as a transaction by sending account
-        console.log("asd");
-        console.log("AI",adoptionInstance)
-        // adoptionInstance.getUsers().then(lol=>console.log("asd",lol)).catch(err=>console.log(err));
-        // adoptionInstance.setUser(account, {from: account}).then(lol=>console.log("asd",lol)).catch(err=>console.log(err));
-        adoptionInstance.setUser.sendTransaction(account, {from: account});
-        return adoptionInstance.getUsers.call();
+      console.log("Account:",account);
+      const adoptionInstance = await App.contracts.Adoption.deployed();
+      console.log(adoptionInstance);
 
-      }).then(function(result) {
-        console.log(result);
-      }).catch(function(err) {
-        console.log(err.message);
-      });
+      const isUserReg = await adoptionInstance.isRegistered(account);
+
+      if(isUserReg){
+        alert("User Already Registered"); 
+      }
+
+      const setUse = await adoptionInstance.setUser(account, {from: account});
+      alert("User Registered!!");
+
     });
   }
 
