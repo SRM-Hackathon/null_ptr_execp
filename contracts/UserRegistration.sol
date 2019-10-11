@@ -3,7 +3,13 @@ pragma solidity ^0.5.0;
 contract UserRegistration {
     address[] public users;
 
-    mapping (address => string) addressWillMapping;
+    struct Will {
+      uint id;
+      string name;
+      string ipfs_hash;
+    }
+
+    mapping (address => Will[]) addressWillMapping;
 
     function setUser(address _user) public{
         uint id = users.push(_user);
@@ -25,12 +31,16 @@ contract UserRegistration {
       return false;
     }
 
-    function addWill(string memory _will) public{
-      addressWillMapping[msg.sender] = _will;
+    function addWill(string memory _name, string memory _ipfs_hash) public{
+      uint id = addressWillMapping[msg.sender].length;
+      addressWillMapping[msg.sender].push(Will(id, _name, _ipfs_hash));
     }
 
-    function getWill(address _user) public view returns(string memory) {
-      return addressWillMapping[_user];
+    function getWill(address _user, uint _id) public view returns(string memory) {
+      for(uint i = 0; i<addressWillMapping[_user].length; ++i) {
+        if(addressWillMapping[_user][i].id == _id)
+          return addressWillMapping[_user][i].ipfs_hash;
+      }
     }
 
 }
