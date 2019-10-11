@@ -121,11 +121,10 @@ App = {
 
       if(isUserReg){
         alert("User Already Registered"); 
+      } else {
+        const setUse = await adoptionInstance.setUser(account, {from: account});
+        alert("User Registered!!");
       }
-
-      const setUse = await adoptionInstance.setUser(account, {from: account});
-      alert("User Registered!!");
-
     });
   }
 
