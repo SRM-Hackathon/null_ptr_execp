@@ -2,10 +2,46 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Helios by HTML5 UP</title>
+		<title>WillStone</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="css/main.css" />
+		<style>
+			#nav > ul:before, #nav > ul:after {
+				width: 100% !important;
+			}
+			#willFileForm{
+				width: 60%;
+				margin:auto;
+				margin-top: 30px;
+			}
+			.inputfile {
+				width: 0.1px;
+				height: 0.1px;
+				opacity: 0;
+				overflow: hidden;
+				position: absolute;
+				z-index: -1;
+			}
+
+			.inputfile + label {
+				font-size: 1.25em;
+				font-weight: 700;
+				color: white;
+				background-color: #EF8376;
+				display: inline-block;
+			}
+
+			.inputfile:focus + label,
+			.inputfile + label:hover {
+				background-color: red;
+			}
+
+			#fileUploadLabel{
+				display: inline-block;
+				cursor: pointer;
+			}
+		</style>
     <script src="https://unpkg.com/ipfs-http-client/dist/index.min.js" crossorigin="anonymous"></script>
     <noscript><link rel="stylesheet" href="css/noscript.css" /></noscript>
 	</head>
@@ -23,16 +59,14 @@
 								<p>Freedom of expression for Everyone</p>
 							</header>
 							<footer>
-								<a href="#banner" class="button entry circle scroll" id = "user-reg">Register</a>
+								<a href="#banner" class="button entry circle scroll" style="border-radius:10px !important;" id = "user-reg">Register</a>
 							</footer>
 						</div>
 
 					<!-- Nav -->
 						<nav id="nav">
-							<ul>
-								<li><a href="index.html">Home</a></li>
-								<li><a href="right-sidebar.html">Right Sidebar</a></li>
-								<li><a href="no-sidebar.html">No Sidebar</a></li>
+							<ul style="padding-left: 0;">
+								<li><a href="index.html" id="top_id_disp">Register</a></li>
 							</ul>
 						</nav>
 
@@ -46,14 +80,14 @@
 							A Decentralised Website that releases your Sensitive Information 
 							If something happens to you
             </p>
-            <div id="willStringDisplay" class="row">
+             <!-- <div id="willStringDisplay" class="row">
                 <button id = "willStringDisplay">Display Will</button>
-              </div>
+              </div> -->
 
-              <form id="willFile" enctype="multipart/form-data">
-                <input type="text" id="willNameVal"/>
-                <input type="file" id="willFileVal"/>
-                <button id="willFileSubmit" type="submit">Upload Will File</button>
+              <form id="willFileForm" enctype="multipart/form-data">
+				<div style="margin-bottom:20px;"><input type="text" id="willNameVal" placeholder="Enter a name for the file" style="display: inline-block; width: 50%;"/>
+					<input type="file" class="inputfile" id="willFileVal"/><label for="willFileVal" class="button circle" id="fileUploadLabel">Choose a file</label></div>
+                <button id="willFileSubmit" type="submit" style="height:50px;font-weight: 600">Upload Will File</button>
               </form>
         
 					</header>

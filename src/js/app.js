@@ -61,10 +61,14 @@ App = {
     regBut.addEventListener("click", (e) => {
       App.handleAdopt(e);
     })
-    let displayWill = document.getElementById("willStringDisplay");
-    displayWill.addEventListener("click", (e) => {
-      App.handleWillDisplay(e);
+    let regButTop = document.getElementById("top_id_disp");
+    regButTop.addEventListener("click", (e) => {
+      App.handleAdopt(e);
     })
+    // let displayWill = document.getElementById("willStringDisplay");
+    // displayWill.addEventListener("click", (e) => {
+    //   App.handleWillDisplay(e);
+    // })
 
     let willFile = document.getElementById("willFileSubmit");
     willFile.addEventListener("click", (e) => {
@@ -111,8 +115,11 @@ App = {
       const isUserReg = await adoptionInstance.isRegistered(account);
       
       let regBut = document.getElementById("user-reg");
+      let regButTop = document.getElementById("top_id_disp");
+
       if(isUserReg){
         regBut.innerText = `Welcome`;
+        regButTop.innerText = account;
       }
     });
   },
