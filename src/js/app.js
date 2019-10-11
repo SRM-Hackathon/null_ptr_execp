@@ -69,11 +69,16 @@ App = {
     // displayWill.addEventListener("click", (e) => {
     //   App.handleWillDisplay(e);
     // })
-
+    let willFileUploadBtn = document.getElementById("willFileVal");
+    willFileUploadBtn.addEventListener("change", (e) => {
+      let file = document.getElementById('willFileVal').files[0];
+      document.getElementById('fileUploadLabel').innerText = file.name.substr(0,15)+'...';
+    });
     let willFile = document.getElementById("willFileSubmit");
     willFile.addEventListener("click", (e) => {
       e.preventDefault();
       let file = document.getElementById('willFileVal').files[0];
+      document.getElementById('fileUploadLabel').innerText = file.name;
       let name = document.getElementById('willNameVal').value;
       uploadFile(file, name);
     });
