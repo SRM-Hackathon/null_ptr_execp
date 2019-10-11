@@ -78,6 +78,10 @@ App = {
     regBut.addEventListener("click", (e) => {
       App.handleAdopt(e);
     })
+    let uploadWill = document.getElementById("willStringSubmit");
+    uploadWill.addEventListener("click", (e) => {
+      App.handleWillUpload(e);
+    })
   },
 
   markAdopted: function(adopters, account) {
@@ -103,9 +107,7 @@ App = {
 
   handleAdopt: function(event) {
     event.preventDefault();
-    console.log("Adopt");
-
-    var adoptionInstance;
+    console.log("Register");
 
     web3.eth.getAccounts(async function(error, accounts) {
       if (error) {
@@ -124,6 +126,38 @@ App = {
       } else {
         const setUse = await adoptionInstance.setUser(account, {from: account});
         alert("User Registered!!");
+      }
+    });
+  },
+
+  handleWillUpload: function(e){
+    e.preventDefault();
+
+    web3.eth.getAccounts(async function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+      console.log("Account:",account);
+      const adoptionInstance = await App.contracts.Adoption.deployed();
+      window.adoptionlol = adoptionInstance;
+      console.log(adoptionInstance);
+
+      const isUserReg = await adoptionInstance.isRegistered(account);
+
+      if(!isUserReg){
+        alert("User Not yet registered. Please register first!!");
+        return; 
+      } else {
+        const willStringVal = document.getElementById("willStringVal").value;
+        try{
+          const willUploadTrans = await adoptionInstance.addWill(willStringVal, {from: account});
+          console.log(willUploadTrans);
+          alert("Uploaded Will!");
+        } catch {
+          alert("Error Occurred!");
+        }
       }
     });
   }
