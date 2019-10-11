@@ -3,24 +3,6 @@ App = {
   contracts: {},
 
   init: async function() {
-    // Load pets.
-    // $.getJSON('../pets.json', function(data) {
-    //   var petsRow = $('#petsRow');
-    //   var petTemplate = $('#petTemplate');
-
-    //   for (i = 0; i < data.length; i ++) {
-    //     petTemplate.find('.panel-title').text(data[i].name);
-    //     petTemplate.find('img').attr('src', data[i].picture);
-    //     petTemplate.find('.pet-breed').text(data[i].breed);
-    //     petTemplate.find('.pet-age').text(data[i].age);
-    //     petTemplate.find('.pet-location').text(data[i].location);
-    //     petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
-
-    //     petsRow.append(petTemplate.html());
-    //   }
-    // });
-    
-
     return await App.initWeb3();
   },
 
@@ -74,20 +56,23 @@ App = {
 
   bindEvents: function() {
     // $(document).on('click', '.btn-adopt', App.handleAdopt);
+    App.handleEntry();
     let regBut = document.getElementById("user-reg");
     regBut.addEventListener("click", (e) => {
       App.handleAdopt(e);
-    })
-    let uploadWill = document.getElementById("willStringSubmit");
-    uploadWill.addEventListener("click", (e) => {
-      App.handleWillUpload(e);
     })
     let displayWill = document.getElementById("willStringDisplay");
     displayWill.addEventListener("click", (e) => {
       App.handleWillDisplay(e);
     })
 
-    App.handleEntry();
+    let willFile = document.getElementById("willFileSubmit");
+    willFile.addEventListener("click", (e) => {
+      e.preventDefault();
+      let file = document.getElementById('willFileVal').files[0];
+      let name = document.getElementById('willNameVal').value;
+      uploadFile(file, name);
+    });
   },
 
   markAdopted: function(adopters, account) {
@@ -161,19 +146,15 @@ App = {
     });
   },
 
-  handleWillUpload: function(e){
-    e.preventDefault();
-
+  handleWillUpload: function(res, name){
     web3.eth.getAccounts(async function(error, accounts) {
       if (error) {
         console.log(error);
       }
 
       var account = accounts[0];
-      console.log("Account:",account);
       const adoptionInstance = await App.contracts.Adoption.deployed();
       window.adoptionlol = adoptionInstance;
-      console.log(adoptionInstance);
 
       const isUserReg = await adoptionInstance.isRegistered(account);
 
@@ -181,10 +162,8 @@ App = {
         alert("User Not yet registered. Please register first!!");
         return; 
       } else {
-        const willStringVal = document.getElementById("willStringVal").value;
         try{
-          const willUploadTrans = await adoptionInstance.addWill(willStringVal, {from: account});
-          console.log(willUploadTrans);
+          const willUploadTrans = await adoptionInstance.addWill(name, res[0].path, {from: account});
           alert("Uploaded Will!");
         } catch {
           alert("Error Occurred!");
@@ -192,40 +171,6 @@ App = {
       }
     });
   },
-
-  handleWillDisplay: async function(e){
-    e.preventDefault();
-
-    web3.eth.getAccounts(async function(error, accounts) {
-      if (error) {
-        console.log(error);
-      }
-
-      var account = accounts[0];
-      console.log("Account:",accounts);
-
-      const adoptionInstance = await App.contracts.Adoption.deployed();
-      window.adoptionlol = adoptionInstance;
-      console.log(adoptionInstance);
-
-      const isUserReg = await adoptionInstance.isRegistered(account);
-
-      if(!isUserReg){
-        alert("User Not yet registered. Please register first!!");
-        return; 
-      } else {
-        try{
-          const willStringVal = await adoptionInstance.getWill(account);
-          console.log("Your Will",willStringVal);
-          alert(`Your Will is ${willStringVal}`);
-        } catch {
-          alert("Error Occurred!");
-        }
-      }
-    });  
-
-  }
-
 };
 
 $(function() {
@@ -233,3 +178,17 @@ $(function() {
     App.init();
   });
 });
+
+const ipfs = window.IpfsHttpClient('localhost', '5001');
+
+async function uploadFile(file, name) {
+  console.log(file);
+  ipfs.add(file, function(err, res) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log(res);
+    App.handleWillUpload(res, name);
+  });
+}

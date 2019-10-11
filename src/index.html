@@ -1,21 +1,13 @@
 
 <!DOCTYPE HTML>
-<!--
-	Helios by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Helios by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="css/main.css" />
+    <script src="https://unpkg.com/ipfs-http-client/dist/index.min.js" crossorigin="anonymous"></script>
     <noscript><link rel="stylesheet" href="css/noscript.css" /></noscript>
-        <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -57,11 +49,12 @@
             <div id="willStringDisplay" class="row">
                 <button id = "willStringDisplay">Display Will</button>
               </div>
-        
-              <div id="willString">
-                <input type="text" id="willStringVal"/>
-                <button id="willStringSubmit">Upload Will</button>
-              </div>
+
+              <form id="willFile" enctype="multipart/form-data">
+                <input type="text" id="willNameVal"/>
+                <input type="file" id="willFileVal"/>
+                <button id="willFileSubmit" type="submit">Upload Will File</button>
+              </form>
         
 					</header>
 				</section>
