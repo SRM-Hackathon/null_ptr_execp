@@ -82,6 +82,10 @@ App = {
     uploadWill.addEventListener("click", (e) => {
       App.handleWillUpload(e);
     })
+    let displayWill = document.getElementById("willStringDisplay");
+    displayWill.addEventListener("click", (e) => {
+      App.handleWillDisplay(e);
+    })
   },
 
   markAdopted: function(adopters, account) {
@@ -160,6 +164,39 @@ App = {
         }
       }
     });
+  },
+
+  handleWillDisplay: async function(e){
+    e.preventDefault();
+
+    web3.eth.getAccounts(async function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+      console.log("Account:",accounts);
+
+      const adoptionInstance = await App.contracts.Adoption.deployed();
+      window.adoptionlol = adoptionInstance;
+      console.log(adoptionInstance);
+
+      const isUserReg = await adoptionInstance.isRegistered(account);
+
+      if(!isUserReg){
+        alert("User Not yet registered. Please register first!!");
+        return; 
+      } else {
+        try{
+          const willStringVal = await adoptionInstance.getWill(account);
+          console.log("Your Will",willStringVal);
+          alert(`Your Will is ${willStringVal}`);
+        } catch {
+          alert("Error Occurred!");
+        }
+      }
+    });  
+
   }
 
 };
