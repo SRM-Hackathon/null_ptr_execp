@@ -149,9 +149,13 @@ App = {
       const isUserReg = await adoptionInstance.isRegistered(account);
 
       if(isUserReg){
-        alert("User Already Registered"); 
+        // alert("User Already Registered"); 
+        window.scrollTo(0,document.body.scrollHeight);
       } else {
         const setUse = await adoptionInstance.setUser(account, {from: account});
+        let regBut = document.getElementById("user-reg");
+        regBut.innerText = `Welcome`;
+
         alert("User Registered!!");
       }
     });
