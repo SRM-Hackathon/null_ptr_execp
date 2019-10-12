@@ -12,3 +12,8 @@
     run daemon in background : 
     
     ipfs daemon
+- disabling CORS
+
+    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin  '["http://example.com"]'
+    
+    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST", "GET"]'
