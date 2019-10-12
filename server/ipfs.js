@@ -1,12 +1,12 @@
 const ipfsAPI = require('ipfs-api');
 const fs = require('fs');
 
-const ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'});
+const ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'});
 
 
 function retrieveFile(name,hash){
 
-
+    console.log("Fetchin");
     ipfs.get(hash, function (err, files) {
         if(err){
             console.log(err);
@@ -24,5 +24,4 @@ function retrieveFile(name,hash){
 
 module.exports = retrieveFile;
 
-// retrieveFile("asdasf.txt","QmeZPbCyRotSaVXtQGt95egE9B1BuEXRPpurgoq9sGxiEr");
 
