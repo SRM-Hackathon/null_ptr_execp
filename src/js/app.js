@@ -87,6 +87,12 @@ App = {
       e.preventDefault();
       App.handleHeartbeatUpload();
     });
+
+    let retrieveButton = document.getElementById("retrieveBtn");
+    retrieveButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      App.handleRetrieveBalOwner();
+    });
     
   },
 
@@ -155,7 +161,7 @@ App = {
         // alert("User Already Registered"); 
         window.scrollTo(0,document.body.scrollHeight);
       } else {
-        const setUse = await adoptionInstance.setUser(account, Date.now(), {from: account, value: 10000});
+        const setUse = await adoptionInstance.setUser(account, Date.now(), web3.utils.toWei('2', "ether"), {from: account, value: web3.utils.toWei('2', "ether")});
         console.log(setUse);
         let regBut = document.getElementById("user-reg");
         regBut.innerText = `Welcome`;
@@ -207,6 +213,21 @@ App = {
 
     });
   },
+
+  handleRetrieveBalOwner: function(e){
+    web3.eth.getAccounts(async function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+      const adoptionInstance = await App.contracts.Adoption.deployed();
+      window.adoptionlol = adoptionInstance;
+
+      const retrieveTrans = await adoptionInstance.retrieveBalance();
+      console.log(retrieveTrans);
+    });
+  }
 };
 
 $(function() {
