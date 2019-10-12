@@ -82,6 +82,12 @@ App = {
       let name = document.getElementById('willNameVal').value;
       uploadFile(file, name);
     });
+    let heartBeatButton = document.getElementById("heartSubmit");
+    heartBeatButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      App.handleHeartbeatUpload();
+    });
+    
   },
 
   markAdopted: function(adopters, account) {
@@ -181,6 +187,21 @@ App = {
           alert("Error Occurred!");
         }
       }
+    });
+  },
+
+  handleHeartbeatUpload: function(res, name){
+    web3.eth.getAccounts(async function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+      const adoptionInstance = await App.contracts.Adoption.deployed();
+      window.adoptionlol = adoptionInstance;
+
+      const updateHeartbeat = await adoptionInstance.giveHeartbeat();
+
     });
   },
 };
