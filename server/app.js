@@ -30,7 +30,7 @@ module.exports = {
     var meta;
     MetaCoin.deployed().then(function(instance) {
       meta = instance;
-      return meta.getUsers.call();
+      return meta.checkDeath.call();
     }).then(function(value) {
         callback(value.valueOf());
     }).catch(function(e) {
