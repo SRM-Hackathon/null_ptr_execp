@@ -37,6 +37,17 @@ app.get('/getAccounts', (req, res) => {
 //   });
 // });
 
+app.get('/test', function(req, res) {
+  let spawn = require("child_process").spawn;
+  let process = spawn('python3', ["../ncipfs.py"]);
+  console.log("started spawining");
+  process.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
+  process.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+});
 
 app.listen(port, () => {
 
