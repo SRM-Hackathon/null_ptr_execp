@@ -2,6 +2,10 @@ pragma solidity ^0.5.0;
 
 contract UserRegistration {
 
+    event Test (
+      uint heart
+    );
+
     struct User {
       address uid;
       uint lastHeartBeat;
@@ -17,8 +21,8 @@ contract UserRegistration {
 
     mapping (address => Will[]) addressWillMapping;
 
-    function setUser(address _user) public{
-        uint id = users.push(User(_user, uint(now)));
+    function setUser(address _user, uint value) public{
+        uint id = users.push(User(_user, value));
         id++;
     }
 
@@ -45,22 +49,21 @@ contract UserRegistration {
       }
     }
 
-    function giveHeartbeat() public{
+    function giveHeartbeat(uint value) public{
       for(uint i = 0; i < users.length; ++i) {
         if(users[i].uid == msg.sender)
         {
-          users[i].lastHeartBeat = now;
+          users[i].lastHeartBeat = value;
           break;
         }
       }
     }
 
-    function checkDeath() public view returns(bool){
+    function checkDeath(uint value) public returns(bool){
       // uint duration = 60 seconds;
         for(uint i = 0; i < users.length; ++i) {
-          if(uint(users[i].lastHeartBeat) < uint(now))
+          if(uint(users[i].lastHeartBeat + 15000) < value)
           {
-            // return users[i].uid;
             return true;
           }
       }
