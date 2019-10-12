@@ -1,0 +1,16 @@
+ll power(ll x, ll n){
+
+    if(n==0){
+        return 1;
+    }
+
+    ll ans = power(x,n/2);
+    ans*=ans;
+    ans%=mod;
+
+    if(n%2){
+        ans*=x;
+        ans%=mod;
+    }
+    return ans;
+}
