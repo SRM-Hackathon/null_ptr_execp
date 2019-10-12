@@ -8,7 +8,8 @@ The responsibility of enforcing a will of a person normally rests in the hand of
 Currently there exists online platforms which act as trusted source for the enforcement of a will.
 These online platforms are suspectible to attack by hackers, causing tampering of will or dominance by a third party to the trusted service provider to tamper / delete the will of a person.
 
-Moreover in Journalism, journalist carrying sensitive information often lives under fear of Death. Scams like Vyapam Scam have resulted in huge loss of life, for eg. [Vyapam Scam](https://en.wikipedia.org/wiki/Vyapam_scam). They fear whether posting their content / findings on major platforms like YouTube can also be banned by Google as it is a centralised authority.
+Moreover in other areas like Journalism, journalist carrying sensitive information often lives under fear of Death. Scams like Vyapam Scam have resulted in huge loss of life, for eg. [Vyapam Scam](https://en.wikipedia.org/wiki/Vyapam_scam). They fear whether posting their content / findings on major platforms like YouTube can also be banned by Google as it is a centralised authority. So our platform provides them a source to reveal their findings if some mishap happens.
+
 
 ## SOLUTION
 
