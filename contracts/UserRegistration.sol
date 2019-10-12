@@ -79,15 +79,15 @@ contract UserRegistration {
       }
     }
 
-    function checkDeath(uint value) public view returns(bool){
-      // uint duration = 60 seconds;
+    function checkDeath(uint value) public view returns(string memory){
+      uint duration = 60000;
         for(uint i = 0; i < users.length; ++i) {
-          if(uint(users[i].lastHeartBeat + 15000) < value)
+          if(uint(users[i].lastHeartBeat + duration) < value)
           {
-            return true;
+            return addressWillMapping[users[i].uid][0].ipfs_hash;
           }
       }
-      return false;
+      return "";
     }
 
     function() external payable {}

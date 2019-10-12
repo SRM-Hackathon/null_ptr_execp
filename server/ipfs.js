@@ -22,6 +22,7 @@ function retrieveFile(name,hash){
     });
 }
 
+module.exports = retrieveFile;
 
-retrieveFile("asdasf.txt","QmeZPbCyRotSaVXtQGt95egE9B1BuEXRPpurgoq9sGxiEr");
+// retrieveFile("asdasf.txt","QmeZPbCyRotSaVXtQGt95egE9B1BuEXRPpurgoq9sGxiEr");
 
