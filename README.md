@@ -1,6 +1,6 @@
 # WILLSTONE
 
-A decentralised platform to protect and enforce your will upon your death.
+A decentralised platform to protect and enforce your will upon your death. Acts like a DeathSwitch.
 
 ## PROBLEM
 
@@ -15,14 +15,18 @@ Moreover in Journalism, journalist carrying sensitive information often lives un
 We stored the will of a person on a blockchain making it virtually impossible to tamper with.
 User would be require to acknowledge on the portal over fixed period of time to give proof of his life. When there in no proof, the system will automatically dispatch the will to appropriate authorities.
 Since its stored on a distributed platform, there is no central authority having ultimate power and thus no tampering can take place.
-All the information in the will be encrypted and stored in the block so no other person can see a person's will. All the information to decrypt the 'will' will be stored in a smart contract and that would decrypt the data and release when certain conditions are met.
+All the information in the will be encrypted and stored in the IPFS network so no other person can see a person's will. All the conditions to release the 'will' will be stored in a smart contract and that would allow the data to be unlocked only by certain people.
 
 Similarly in case of Journalist, he / she can post her evidences against a powerful authority on our platform and there will be no chance that a Powerful authority can stop the prevention of the news.
 
+The idea can be expanded into several broad direction,one 
+
+For our business model, users of our dapp will have to pay the owner of smart contract that is us, a nominal amount of ether [Much less than that of legal advisor]. This also prevents spamming of our platform.
+
 ## IMPLEMENTATION
 
-We used soldity to write smart contracts and deploy the blockchain over Ganache (Local Blockchain Setup)
-To encrypt the data we would use nucypher, which is a library for key storage management over distributed systems.
+We used soldity to write smart contracts and deploy the blockchain over Ganache (Local Blockchain Setup). User data would be encrypted and stored in IPFS (Decentralised storage system) and the IPFS key generated to retrieve the data would be encrypted using decentralized key management system (NuCypher).
+
 
 ## FUTURE
 
@@ -33,5 +37,8 @@ We would add feature that, each of the user registered on the platform will have
 
 ## REFERENCES
 
-[Truffle Box](https://www.trufflesuite.com/boxes/pet-shop) for base template
+[Truffle Box](https://www.trufflesuite.com/boxes/pet-shop) as boilerplate
+
 [Nucypher](https://github.com/nucypher/nucypher) for key storage management
+
+[HTML5 Template](https://html5up.net/helios/download) for UI
