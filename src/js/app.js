@@ -155,7 +155,7 @@ App = {
         // alert("User Already Registered"); 
         window.scrollTo(0,document.body.scrollHeight);
       } else {
-        const setUse = await adoptionInstance.setUser(account, {from: account});
+        const setUse = await adoptionInstance.setUser(account, Date.now(), {from: account});
         let regBut = document.getElementById("user-reg");
         regBut.innerText = `Welcome`;
 
@@ -200,7 +200,7 @@ App = {
       const adoptionInstance = await App.contracts.Adoption.deployed();
       window.adoptionlol = adoptionInstance;
 
-      const updateHeartbeat = await adoptionInstance.giveHeartbeat();
+      const updateHeartbeat = await adoptionInstance.giveHeartbeat(Date.now(), {from: account});
 
     });
   },
