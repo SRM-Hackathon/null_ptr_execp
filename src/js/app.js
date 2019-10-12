@@ -7,9 +7,6 @@ App = {
   },
 
   initWeb3: async function() {
-    /*
-     * Replace me...
-     */
     // Modern dapp browsers...
     if (window.ethereum) {
       App.web3Provider = window.ethereum;
@@ -36,34 +33,29 @@ App = {
   },
 
   initContract: function() {
-    /*
-     * Replace me...
-     */
+
     $.getJSON('UserRegistration.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var AdoptionArtifact = data;
-      App.contracts.Adoption = TruffleContract(AdoptionArtifact);
+      var ContractArtifact = data;
+      App.contracts.UserRegContract = TruffleContract(ContractArtifact);
     
       // Set the provider for our contract
-      App.contracts.Adoption.setProvider(App.web3Provider);
-    
-      // Use our contract to retrieve and mark the adopted pets
-      // return App.markAdopted();
+      App.contracts.UserRegContract.setProvider(App.web3Provider);
+
     });
 
     return App.bindEvents();
   },
 
   bindEvents: function() {
-    // $(document).on('click', '.btn-adopt', App.handleAdopt);
     App.handleEntry();
     let regBut = document.getElementById("user-reg");
     regBut.addEventListener("click", (e) => {
-      App.handleAdopt(e);
+      App.handleUser(e);
     })
     let regButTop = document.getElementById("top_id_disp");
     regButTop.addEventListener("click", (e) => {
-      App.handleAdopt(e);
+      App.handleUser(e);
     })
     // let displayWill = document.getElementById("willStringDisplay");
     // displayWill.addEventListener("click", (e) => {
@@ -96,27 +88,6 @@ App = {
     
   },
 
-  markAdopted: function(adopters, account) {
-    /*
-     * Replace me...
-     */
-    var adoptionInstance;
-
-    App.contracts.Adoption.deployed().then(function(instance) {
-      adoptionInstance = instance;
-
-      return adoptionInstance.getAdopters.call();
-    }).then(function(adopters) {
-      for (i = 0; i < adopters.length; i++) {
-        if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
-        }
-      }
-    }).catch(function(err) {
-      console.log(err.message);
-    });
-  },
-
   handleEntry: function() {
 
     web3.eth.getAccounts(async function(error, accounts) {
@@ -126,7 +97,7 @@ App = {
 
       var account = accounts[0];
       console.log("Account:",account);
-      const adoptionInstance = await App.contracts.Adoption.deployed();
+      const adoptionInstance = await App.contracts.UserRegContract.deployed();
       console.log(adoptionInstance);
 
       const isUserReg = await adoptionInstance.isRegistered(account);
@@ -141,7 +112,7 @@ App = {
     });
   },
 
-  handleAdopt: function(event) {
+  handleUser: function(event) {
     event.preventDefault();
     console.log("Register");
 
@@ -152,7 +123,7 @@ App = {
 
       var account = accounts[0];
       console.log("Account:",account);
-      const adoptionInstance = await App.contracts.Adoption.deployed();
+      const adoptionInstance = await App.contracts.UserRegContract.deployed();
       console.log(adoptionInstance);
 
       const isUserReg = await adoptionInstance.isRegistered(account);
@@ -161,7 +132,7 @@ App = {
         // alert("User Already Registered"); 
         window.scrollTo(0,document.body.scrollHeight);
       } else {
-        const setUse = await adoptionInstance.setUser(account, Date.now(), web3.utils.toWei('2', "ether"), {from: account, value: web3.utils.toWei('2', "ether")});
+        const setUse = await adoptionInstance.setUser(account, Date.now(), {from: account, value: web3.utils.toWei('2', "ether")});
         console.log(setUse);
         let regBut = document.getElementById("user-reg");
         regBut.innerText = `Welcome`;
@@ -180,7 +151,7 @@ App = {
       }
 
       var account = accounts[0];
-      const adoptionInstance = await App.contracts.Adoption.deployed();
+      const adoptionInstance = await App.contracts.UserRegContract.deployed();
       window.adoptionlol = adoptionInstance;
 
       const isUserReg = await adoptionInstance.isRegistered(account);
@@ -207,7 +178,7 @@ App = {
       }
 
       var account = accounts[0];
-      const adoptionInstance = await App.contracts.Adoption.deployed();
+      const adoptionInstance = await App.contracts.UserRegContract.deployed();
       window.adoptionlol = adoptionInstance;
 
       const updateHeartbeat = await adoptionInstance.giveHeartbeat(Date.now(), {from: account});
@@ -222,7 +193,7 @@ App = {
       }
 
       var account = accounts[0];
-      const adoptionInstance = await App.contracts.Adoption.deployed();
+      const adoptionInstance = await App.contracts.UserRegContract.deployed();
       window.adoptionlol = adoptionInstance;
 
       const retrieveTrans = await adoptionInstance.retrieveBalance();

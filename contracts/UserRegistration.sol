@@ -17,7 +17,13 @@ contract UserRegistration {
         _;
     }
 
+    modifier onlyUser(address _user) {
+        require(msg.sender == _user,"Not the current user!!");
+        _;
+    }
+
     User[] public users;
+    uint REG_COST = 2 ether;
     // uint balance = 0;
     address payable _owner;
 
@@ -33,17 +39,18 @@ contract UserRegistration {
       _owner = msg.sender;
     }
 
-    function setUser(address payable _user, uint randValue, uint value) public payable{
-        require(msg.value == value, "Please send the required amt");
-        uint id = users.push(User(_user, randValue, false));
+    function setUser(address payable _user, uint randValue) public payable{
+        require(msg.value == REG_COST, "Please send the required amt");
+        uint id = users.push(User(_user, randValue));
         id++;
     }
 
     function retrieveBalance() external onlyOwner{
+      require(address(this).balance!=0, "Contract Balance is 0");
       msg.sender.transfer(address(this).balance);
     }
 
-    function getBalance() public view returns(uint){
+    function getBalance() public view onlyOwner returns(uint){
       return address(this).balance;
     }
 
