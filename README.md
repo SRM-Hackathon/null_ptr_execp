@@ -39,6 +39,8 @@ We would add feature that, each of the user registered on the platform will have
 
 [Truffle Box](https://www.trufflesuite.com/boxes/pet-shop) as boilerplate
 
+
 [Nucypher](https://github.com/nucypher/nucypher) for key storage management
+
 
 [HTML5 Template](https://html5up.net/helios/download) for UI
