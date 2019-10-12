@@ -11,7 +11,14 @@ contract UserRegistration {
       uint lastHeartBeat;
     }
 
+    modifier onlyOwner() {
+        require(msg.sender == _owner,"Not owner!!");
+        _;
+    }
+
     User[] public users;
+    // uint balance = 0;
+    address payable _owner;
 
     struct Will {
       uint id;
@@ -21,9 +28,22 @@ contract UserRegistration {
 
     mapping (address => Will[]) addressWillMapping;
 
-    function setUser(address _user, uint value) public{
-        uint id = users.push(User(_user, value));
+    constructor() public{
+      _owner = msg.sender;
+    }
+
+    function setUser(address payable _user, uint randValue, uint value) public payable{
+        require(msg.value == value, "Please send the required amt");
+        uint id = users.push(User(_user, randValue));
         id++;
+    }
+
+    function retrieveBalance() external onlyOwner{
+      msg.sender.transfer(address(this).balance);
+    }
+
+    function getBalance() public view returns(uint){
+      return address(this).balance;
     }
 
     function isRegistered(address _user) public view returns(bool) {
@@ -59,7 +79,7 @@ contract UserRegistration {
       }
     }
 
-    function checkDeath(uint value) public returns(bool){
+    function checkDeath(uint value) public view returns(bool){
       // uint duration = 60 seconds;
         for(uint i = 0; i < users.length; ++i) {
           if(uint(users[i].lastHeartBeat + 15000) < value)
@@ -69,6 +89,8 @@ contract UserRegistration {
       }
       return false;
     }
+
+    function() external payable {}
 
 }
 

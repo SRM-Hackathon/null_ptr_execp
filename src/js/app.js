@@ -155,11 +155,14 @@ App = {
         // alert("User Already Registered"); 
         window.scrollTo(0,document.body.scrollHeight);
       } else {
-        const setUse = await adoptionInstance.setUser(account, Date.now(), {from: account});
+        const setUse = await adoptionInstance.setUser(account, Date.now(), {from: account, value: 10000});
+        console.log(setUse);
         let regBut = document.getElementById("user-reg");
         regBut.innerText = `Welcome`;
 
         alert("User Registered!!");
+        let bal = await adoptionInstance.getBalance();
+        console.log("Bal:", bal);
       }
     });
   },
