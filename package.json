@@ -15,5 +15,11 @@
   "devDependencies": {
     "lite-server": "^2.3.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "ipfs-api": "^26.1.2",
+    "ipfs-http-client": "^38.2.0",
+    "pull-stream-to-async-iterator": "^1.0.2",
+    "truffle-contract": "^4.0.31"
+  }
 }

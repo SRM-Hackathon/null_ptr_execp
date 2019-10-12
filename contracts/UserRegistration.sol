@@ -9,6 +9,7 @@ contract UserRegistration {
     struct User {
       address uid;
       uint lastHeartBeat;
+      bool isDead;
     }
 
     modifier onlyOwner() {
@@ -26,7 +27,7 @@ contract UserRegistration {
       string ipfs_hash;
     }
 
-    mapping (address => Will[]) addressWillMapping;
+    mapping (address => Will) addressWillMapping;
 
     constructor() public{
       _owner = msg.sender;
@@ -34,7 +35,7 @@ contract UserRegistration {
 
     function setUser(address payable _user, uint randValue, uint value) public payable{
         require(msg.value == value, "Please send the required amt");
-        uint id = users.push(User(_user, randValue));
+        uint id = users.push(User(_user, randValue, false));
         id++;
     }
 
@@ -58,16 +59,16 @@ contract UserRegistration {
     }
 
     function addWill(string memory _name, string memory _ipfs_hash) public{
-      uint id = addressWillMapping[msg.sender].length;
-      addressWillMapping[msg.sender].push(Will(id, _name, _ipfs_hash));
+      uint id = 0;
+      addressWillMapping[msg.sender] = Will(id, _name, _ipfs_hash);
     }
 
-    function getWill(address _user, uint _id) public view returns(string memory) {
-      for(uint i = 0; i<addressWillMapping[_user].length; ++i) {
-        if(addressWillMapping[_user][i].id == _id)
-          return addressWillMapping[_user][i].ipfs_hash;
-      }
-    }
+    // function getWill(address _user, uint _id) public view returns(string memory) {
+    //   for(uint i = 0; i<addressWillMapping[_user].length; ++i) {
+    //     if(addressWillMapping[_user][i].id == _id)
+    //       return addressWillMapping[_user][i].ipfs_hash;
+    //   }
+    // }
 
     function giveHeartbeat(uint value) public{
       for(uint i = 0; i < users.length; ++i) {
@@ -79,15 +80,16 @@ contract UserRegistration {
       }
     }
 
-    function checkDeath(uint value) public view returns(bool){
-      // uint duration = 60 seconds;
+    function checkDeath(uint value) public returns(string memory){
+      uint duration = 20000;
         for(uint i = 0; i < users.length; ++i) {
-          if(uint(users[i].lastHeartBeat + 15000) < value)
+          if(users[i].isDead == false && uint(users[i].lastHeartBeat + duration) < value)
           {
-            return true;
+            users[i].isDead = true;
+            return addressWillMapping[users[i].uid].ipfs_hash;
           }
       }
-      return false;
+      return "";
     }
 
     function() external payable {}

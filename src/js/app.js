@@ -191,6 +191,7 @@ App = {
       } else {
         try{
           const willUploadTrans = await adoptionInstance.addWill(name, res[0].path, {from: account});
+          console.log(res[0].path);
           alert("Uploaded Will!");
         } catch {
           alert("Error Occurred!");
@@ -239,7 +240,7 @@ $(function() {
 const ipfs = window.IpfsHttpClient('localhost', '5001');
 
 async function uploadFile(file, name) {
-  console.log(file);
+  console.log(ipfs);
   ipfs.add(file, function(err, res) {
     if (err) {
       console.error(err);
